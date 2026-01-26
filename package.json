@@ -11,14 +11,18 @@
     "format:check": "pnpm exec prettier --check .",
     "format:fix": "pnpm exec prettier --write .",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "gen": "orval"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.20",
+    "axios": "^1.13.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
@@ -30,6 +34,7 @@
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "orval": "^8.1.0",
     "prettier": "3.8.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
