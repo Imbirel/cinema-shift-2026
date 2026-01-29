@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router';
 
+// Это заготовка. Можно не смотреть особо
 export function CheckoutPage() {
   const location = useLocation();
 

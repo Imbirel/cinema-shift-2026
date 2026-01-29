@@ -1,0 +1,21 @@
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::placeholder {
+    @apply border-border;
+  }
+
+  *:focus-visible {
+    @apply outline-ring/50;
+  }
+
+  html {
+    scrollbar-gutter: stable;
+    scroll-behavior: smooth;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}

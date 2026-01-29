@@ -3,9 +3,23 @@ export default {
     input: {
       target: './openapi/api-spec.json',
       filters: {
-        tags: [/cinema/, /users/, /otps/, 'pages'],
+        tags: [/cinema/, /users/, /otps/],
+        schemas: [
+          /Cinema/,
+          /Film/,
+          /User/,
+          /CreateOtp/,
+          /CreatePayment/,
+          /^PaymentResponse/,
+          /Session/,
+          /SignIn/,
+          /UpdateProfile/,
+          /OtpResponse/,
+          /Schedule/,
+          /Ticket/,
+          /BaseResponse/,
+        ],
       },
-      schemas: ['UserDTO', 'CinemaResponse', /^OTP/],
     },
     output: {
       mode: 'tags-split',
@@ -20,6 +34,7 @@ export default {
         },
         useTypeOverInterfaces: true,
       },
+      clean: true,
     },
   },
 };
