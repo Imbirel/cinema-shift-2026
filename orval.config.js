@@ -1,40 +1,56 @@
-export default {
-  intensive: {
+import { defineConfig } from 'orval';
+
+export default defineConfig({
+  cinema: {
     input: {
       target: './openapi/api-spec.json',
       filters: {
-        tags: [/cinema/, /users/, /otps/],
-        schemas: [
-          /Cinema/,
-          /Film/,
-          /User/,
-          /CreateOtp/,
-          /CreatePayment/,
-          /^PaymentResponse/,
-          /Session/,
-          /SignIn/,
-          /UpdateProfile/,
-          /OtpResponse/,
-          /Schedule/,
-          /Ticket/,
-          /BaseResponse/,
-        ],
+        mode: 'exclude',
+        tags: [/pages/, /otps/, /android/, /tester/, /car/, /deliver/, /pizza/],
+        schemas: [/Otp/, /Car/, /Loan/, /Rent/, /Deliver/, /Pizza/],
+      },
+      override: {
+        transformer: (spec) => {
+          Object.values(spec.paths).forEach((path) => {
+            Object.values(path).forEach((operation) => {
+              if (operation.tags) {
+                operation.tags = operation.tags.map((tag) =>
+                  tag
+                    .replace(/[^\p{L}\p{N}_-]/gu, '')
+                    .replace(/^[-_]+|[-_]+$/g, ''),
+                );
+              }
+            });
+          });
+          return spec;
+        },
       },
     },
     output: {
       mode: 'tags-split',
-      target: './src/api/generated/endpoints',
-      schemas: './src/api/generated/models',
+      target: './src/shared/api/generated/endpoints',
+      schemas: './src/shared/api/generated/models',
       client: 'react-query',
       httpClient: 'axios',
       override: {
         mutator: {
-          path: './src/api/instance.ts',
+          path: './src/shared/api/instance.ts',
           name: 'instance',
         },
-        useTypeOverInterfaces: true,
+        header: (info) => {
+          const headerLines = Array.isArray(info.header) ? info.header : [];
+          return [
+            '/* eslint-disable */',
+            '// @ts-nocheck',
+            ...headerLines,
+            '',
+          ].join('\n');
+        },
       },
       clean: true,
     },
+    hooks: {
+      afterAllFilesWrite: 'prettier --write',
+    },
   },
-};
+});
